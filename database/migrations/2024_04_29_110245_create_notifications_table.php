@@ -13,7 +13,7 @@ class CreateNotificationsTable extends Migration {
 			$table->timestamps();
 			$table->string('title');
 			$table->text('content');
-			$table->integer('donation_requests_id');
+			$table->integer('donation_request_id');
 		});
 	}
 

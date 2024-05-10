@@ -11,6 +11,10 @@ class City extends Model
     public $timestamps = true;
     protected $fillable = array('name', 'governorate_id');
 
+    public function clients()
+    {
+        return $this->hasMany('App\Models\Client');
+    }
     public function governorate()
     {
         return $this->belongsTo('App\Models\Governorate');

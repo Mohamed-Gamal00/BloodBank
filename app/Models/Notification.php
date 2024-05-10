@@ -11,14 +11,14 @@ class Notification extends Model
     public $timestamps = true;
     protected $fillable = array('title', 'content', 'donation_requests_id');
 
-    public function client()
+    public function clients()
     {
         return $this->belongsToMany('App\Models\Client');
     }
 
-    public function donationsRequest()
+    public function DonationRequest()
     {
-        return $this->belongsToMany('App\Models\DonationRequest');
+        return $this->belongsTo('App\Models\DonationRequest');
     }
 
 }

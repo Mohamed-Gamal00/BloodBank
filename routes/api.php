@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\MainController;
+use App\Http\Controllers\Api\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,10 @@ Route::get('post/{id}', [MainController::class, "post"]);
 Route::post('contact-us', [MainController::class, "contactus"]);
 
 Route::group(['middleware' => 'auth:api'], function () {
-
     Route::get('notifications', [AuthController::class, "notifications"]);
+    Route::post('register-token', [AuthController::class, "registerToken"]);
+    Route::post('remove-token', [AuthController::class, "removeToken"]);
+    Route::post('notification-settings', [AuthController::class, "notificationSettings"]);
     Route::get('settings', [AuthController::class, "settings"]);
     Route::get('profile', [AuthController::class, "profile"]);
     Route::post('profileUpdate', [AuthController::class, "profileUpdate"]);
@@ -49,3 +52,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
     Route::post('toggleFavourite', [MainController::class, "toggleFavourite"]);
     Route::get('listFavourites', [MainController::class, "listFavourites"]);
+
+//********************************************************************* */
+  Route::get('test', [TestController::class, "test"]);

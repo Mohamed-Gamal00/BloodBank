@@ -23,7 +23,12 @@ class DonationRequest extends Model
 
     public function bloodType()
     {
-        return $this->belongsTo('App\Models\Blood_type');
+        return $this->belongsTo('App\Models\BloodType');
+    }
+
+    public function notification()
+    {
+        return $this->hasMany('App\Models\Notification');
     }
 
 }

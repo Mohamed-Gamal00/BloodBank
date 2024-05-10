@@ -11,14 +11,14 @@ class Governorate extends Model
     public $timestamps = true;
     protected $fillable = array('name');
 
-    public function cities()
+    public function city()
     {
         return $this->hasMany('App\Models\City');
     }
 
     public function clients()
     {
-        return $this->hasMany('App\Models\Client');
+        // relatiom m:m between Governorate and clients
+        return $this->belongsToMany('App\Models\Client');
     }
-
 }

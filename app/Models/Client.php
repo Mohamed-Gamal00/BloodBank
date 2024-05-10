@@ -29,6 +29,7 @@ class Client extends Authenticatable
     }
 
     public function blood_types()
+    //الفصائل اللي الكلاينت مختار يجيله فيها اشعارات
     {
         return $this->belongsToMany('App\Models\BloodType');
     }
@@ -46,6 +47,10 @@ class Client extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany('App\Models\Notification');
+    }
+    public function tokens()
+    {
+        return $this->hasMany('App\Models\Token');
     }
 
     protected $hidden = [
