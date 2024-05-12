@@ -145,6 +145,20 @@ class AuthController extends Controller
         return responseJson(0, 'notification not found', $notifications);
     }
 
+    public function notification(Request $request ,$id)
+    {
+
+        $notification = Notification::find($id);
+        if (!$notification) {
+            return responseJson(0, 'notification not found');
+        }
+        // $user = auth()->guard('api')->user();
+        // return $user->posts()->toggle($request->post_id);
+        $user = auth()->guard('api')->user();
+        $user->notifications()->updateExistingPivot($notification->id, ['is_read' => true]);
+        return responseJson(1, 'success', $notification);
+    }
+
     public function notificationSettings(Request $request)
     {
         $validator = validator()->make(
@@ -164,4 +178,5 @@ class AuthController extends Controller
         return responseJson(1, 'Notification settings updated successfully');
 
     }
+
 }

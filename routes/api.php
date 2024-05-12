@@ -37,6 +37,7 @@ Route::post('contact-us', [MainController::class, "contactus"]);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('notifications', [AuthController::class, "notifications"]);
+    Route::get('notification/{id}', [AuthController::class, "notification"]);
     Route::post('register-token', [AuthController::class, "registerToken"]);
     Route::post('remove-token', [AuthController::class, "removeToken"]);
     Route::post('notification-settings', [AuthController::class, "notificationSettings"]);
