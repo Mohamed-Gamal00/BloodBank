@@ -6,10 +6,12 @@
             <div class="pull-left image">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
-            <div class="pull-left info">
-                <p>Alexander Pierce</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
+            @if (Auth::check())
+                <div class="pull-left info">
+                    <p>{{ Auth::user()->name }}</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            @endif
         </div>
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
@@ -36,6 +38,16 @@
                     <i class="fa fa-th"></i> <span>Governorates</span>
                 </a>
             </li>
+            <li>
+                <a class="p-0">
+                    <form class="px-3" id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                        <!-- Add a button or link to trigger the form submission -->
+                        <button style="width: 100%" class="btn btn-danger" type="submit"><span>Logout</span></button>
+                    </form>
+                </a>
+            </li>
+
             {{-- <li class="treeview">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>
