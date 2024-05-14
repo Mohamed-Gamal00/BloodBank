@@ -10,7 +10,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
             <div>
-                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Governorates</h2>
+                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Categories</h2>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
 @endsection
 @section('content')
 
-    @if (count($governorates))
+    @if (count($categories))
         <div class="col-xl-12 px-0">
             <div class="card">
                 <div class="card-header pb-0 mb-3">
@@ -29,11 +29,11 @@
                     @endif
                     <div class="d-flex justify-content-between">
                         <div>
-                            <a href="{{ route('governorate.create') }}">
+                            <a href="{{ route('category.create') }}">
 
                                 <button class="btn btn-outline-dark btn-block font-weight-bold">
                                     <i class="fa fa-plus mx-1"></i>
-                                    Add New Governorate
+                                    Add New Category
                                 </button>
                             </a>
                         </div>
@@ -52,13 +52,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($governorates as $governorate)
+                                @foreach ($categories as $category)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $governorate->name }}</td>
+                                        <td>{{ $category->name }}</td>
                                         <td>
                                             <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
-                                                <a href="{{ route('governorate.edit', $governorate->id) }}">
+                                                <a href="{{ route('category.edit', $category->id) }}">
                                                     <button class="btn btn-outline-success btn-with-icon btn-block">
                                                         <i class="typcn typcn-edit"></i>
                                                         Edit
@@ -69,43 +69,25 @@
                                         </td>
                                         <td>
 
-                                            <form action="{{ route('governorate.destroy', $governorate->id) }}"
-                                                method="POST" id="deleteForm{{ $governorate->id }}">
+                                            <form action="{{ route('category.destroy', $category->id) }}"
+                                                method="POST" id="deleteForm{{ $category->id }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
                                                     <button type="button"
                                                         class="btn btn-outline-danger btn-with-icon btn-block"
-                                                        onclick="confirmDelete({{ $governorate->id }})">Delete</button>
+                                                        onclick="confirmDelete({{ $category->id }})">Delete</button>
                                                 </div>
-                                                {{-- <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
-                                                    <button
-                                                        class="btn btn-outline-danger btn-with-icon btn-block">
-                                                        <a href="{{ route('governorate.destroy', $governorate->id) }}">
-                                                            <i class="typcn typcn-delete"></i>
-                                                            Delete
-                                                        </a>
-                                                    </button>
-
-                                                </div> --}}
                                             </form>
 
                                             <script>
                                                 function confirmDelete(id) {
-                                                    if (confirm('Are you sure you want to delete this governorate?')) {
+                                                    if (confirm('Are you sure you want to delete this category?')) {
                                                         document.getElementById('deleteForm' + id).submit();
                                                     }
                                                 }
                                             </script>
-                                            {{-- <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
-                                                <a href="{{ route('governorate.destroy', $governorate->id) }}">
-                                                    <button class="btn btn-outline-danger btn-with-icon btn-block">
-                                                        <i class="typcn typcn-delete"></i>
-                                                        Delete
-                                                    </button>
-                                                </a>
 
-                                            </div> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -113,7 +95,7 @@
                             </tbody>
                         </table>
 
-                        {{$governorates->links()}} {{-- اخلي الباجينيشن يكون بالبوتستراب App serveice provider بروح ل  --}}
+                        {{$categories->links()}} {{-- اخلي الباجينيشن يكون بالبوتستراب App serveice provider بروح ل  --}}
                     </div><!-- bd -->
                 </div><!-- bd -->
             </div><!-- bd -->

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Governorate;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Redirect;
 
 class GovernorateController extends Controller
 {
@@ -13,8 +15,8 @@ class GovernorateController extends Controller
      */
     public function index()
     {
-        $governorates = Governorate::paginate(20);
-        return view('dashboard.governorates.index',compact($governorates));
+        $governorates = Governorate::paginate(10);
+        return view('dashboard.governorates.index',compact('governorates'));
     }
 
     /**
@@ -22,7 +24,8 @@ class GovernorateController extends Controller
      */
     public function create()
     {
-        //
+        $governorate = new Governorate();
+        return view('dashboard.governorates.create',compact('governorate'));
     }
 
     /**
@@ -30,7 +33,18 @@ class GovernorateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required'
+        ];
+        $message = [
+            'name.required' => 'Name is required'
+        ];
+        $this->validate($request,$rules,$message);
+
+        Governorate::create($request->all());
+        return Redirect::route('governorate.index')->with('success', 'Governorate Created success');
+
+        // dd('here');
     }
 
     /**
@@ -44,9 +58,10 @@ class GovernorateController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $governorate = Governorate::findOrFail($id);
+        return view('dashboard.governorates.edit',compact('governorate'));
     }
 
     /**
@@ -54,7 +69,19 @@ class GovernorateController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $governorate = Governorate::findOrFail($id);
+
+        $rules = [
+            'name' => 'required'
+        ];
+        $message = [
+            'name.required' => 'Name is required'
+        ];
+        $this->validate($request, $rules, $message);
+        
+        $governorate->update($request->all());
+        return Redirect::route('governorate.index')->with('success', 'Governorate Updated success');
+
     }
 
     /**
@@ -62,6 +89,8 @@ class GovernorateController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $governorate = Governorate::findOrFail($id);
+        $governorate->delete();
+        return Redirect::route('governorate.index')->with('success', 'Governorate Deleted success');
     }
 }

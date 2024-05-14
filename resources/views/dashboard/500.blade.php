@@ -1,4 +1,4 @@
-@extends('layouts.master2')
+@extends('dashboard.layouts.partials.master2')
 @section('css')
 <!--- Internal Fontawesome css-->
 <link href="{{URL::asset('assets/plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">

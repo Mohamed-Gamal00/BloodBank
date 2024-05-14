@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\GovernorateController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +28,8 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('admin', [DashboardController::class, 'index'])->name('dashboard');
-    // Route::get('governorates', [GovernorateController::class, 'index'])->name('governorates');
-    Route::resource('governorates', GovernorateController::class );
+    Route::resource('governorate', GovernorateController::class );
+    Route::resource('city', CityController::class );
+    Route::resource('category', CategoryController::class );
 
 });
