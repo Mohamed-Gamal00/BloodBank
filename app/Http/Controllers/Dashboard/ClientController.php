@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\BloodType;
+use App\Models\City;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -14,12 +16,25 @@ class ClientController extends Controller
     public function index()
     {
         $request = request();
-        $query = Client::query();
-        if($name = $request->query('name')){
-            $query->where('name','LIKE',"%{$name}%");
+        $query = Client::query(); // return query builder of this model
+        if ($request->query('query')) {
+            $query->where('name', 'LIKE', "%{$request->query('query')}%")
+                ->orWhere('phone', 'LIKE', "%{$request->query('query')}%")
+                ->orWhere('email', 'LIKE', "%{$request->query('query')}%");
         }
-        $clients = $query->paginate(10);
-        return view('dashboard.clients.index', compact('clients'));
+        if ($request->query('city')) {
+            $cityId = $request->query('city');
+            $query->where('city_id', $cityId);
+        }
+        if ($request->query('bloodType')) {
+            $bloodTypeId = $request->query('bloodType');
+            $query->where('blood_type_id', $bloodTypeId);
+        }
+
+        $cities = City::all();
+        $bloodTypes = BloodType::all();
+        $clients = $query->paginate(1);
+        return view('dashboard.clients.index', compact('clients', 'cities', 'bloodTypes'));
     }
 
     /**

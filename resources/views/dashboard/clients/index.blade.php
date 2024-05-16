@@ -30,7 +30,19 @@
                 </div>
                 <div class="card-body">
                     <form action="{{ URL::current() }}" method="GET" class="d-flex justify-content-between mb-4">
-                        <input name="name" placeholder="Name" class="mx-2 form-control" :value="request('name')" />
+                        <input name="query" placeholder="Name" class="mx-2 form-control" />
+                        <select name="city" class="form-control mx-2" id="">
+                        <option value="">city</option>
+                            @foreach ($cities as $city)
+                                <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                        </select>
+                        <select name="bloodType" class="form-control mx-2" id="">
+                            <option value="">bloodtype</option>
+                            @foreach ($bloodTypes as $bloodType)
+                                <option value="{{$bloodType->id}}">{{$bloodType->name}}</option>
+                            @endforeach
+                        </select>
                         <button class="btn btn-dark">Filter</button>
                     </form>
 
