@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\models\Category;
 use Illuminate\Http\Request;
+use Redirect;
 
 class CategoryController extends Controller
 {
@@ -31,7 +32,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required'
+        ];
+        $message = [
+            'name.required' => 'Name is required'
+        ];
+        $this->validate($request, $rules, $message);
+
+        Category::create($request->all());
+        return Redirect::route('category.index')->with('success', 'Governorate Created success');
     }
 
     /**
@@ -47,7 +57,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('dashboard.categories.edit', compact('category'));
     }
 
     /**
@@ -55,7 +66,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $rules = [
+            'name' => 'required'
+        ];
+        $message = [
+            'name.required' => 'Name is required'
+        ];
+        $this->validate($request, $rules, $message);
+
+        $category->update($request->all());
+        return Redirect::route('category.index')->with('success', 'Category Updated success');
     }
 
     /**
@@ -63,6 +85,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return Redirect::route('category.index')->with('success', 'Category Deleted success');
     }
 }

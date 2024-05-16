@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.partials.master')
 @section('css')
     <!--  Owl-carousel css-->
     <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" />
@@ -10,7 +10,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
             <div>
-                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Edit Governorate</h2>
+                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Edit Category</h2>
             </div>
         </div>
     </div>
@@ -19,9 +19,9 @@
 @section('content')
     <div class="my-5">
         @include('dashboard.layouts.partials.error_validation')
-        <form method="POST" action="{{ route('city.update',$city->id,$governorates) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('category.update',$category) }}" enctype="multipart/form-data">
             @method('PUT')
-            @include('dashboard.cities.form')
+            @include('dashboard.categories.form')
         </form>
     </div>
 @endsection

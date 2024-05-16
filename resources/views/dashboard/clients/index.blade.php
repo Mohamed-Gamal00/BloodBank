@@ -10,7 +10,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
             <div>
-                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Categories</h2>
+                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Clients</h2>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
 @endsection
 @section('content')
 
-    @if (count($categories))
+    @if (count($clients))
         <div class="col-xl-12 px-0">
             <div class="card">
                 <div class="card-header pb-0 mb-3">
@@ -27,22 +27,12 @@
                             {{ Session::get('success') }}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <a href="{{ route('category.create') }}">
-
-                                <button class="btn btn-outline-dark btn-block font-weight-bold">
-                                    <i class="fa fa-plus mx-1"></i>
-                                    Add New Category
-                                </button>
-                            </a>
-                        </div>
-                        <i class="mdi mdi-dots-horizontal text-gray"></i>
-                    </div>
                 </div>
                 <div class="card-body">
-
-                    
+                    <form action="{{ URL::current() }}" method="GET" class="d-flex justify-content-between mb-4">
+                        <input name="name" placeholder="Name" class="mx-2 form-control" :value="request('name')" />
+                        <button class="btn btn-dark">Filter</button>
+                    </form>
 
                     <div class="table-responsive">
                         <table class="table table-striped mg-b-0 text-md-nowrap">
@@ -50,42 +40,44 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Edit</th>
+                                    <th>email</th>
+                                    <th>phone</th>
+                                    <th>blood type</th>
+                                    <th>last donation date</th>
+                                    <th>date of birth</th>
+                                    <th>city</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($clients as $client)
                                     <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $category->name }}</td>
-                                        <td>
-                                            <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
-                                                <a href="{{ route('category.edit', $category->id) }}">
-                                                    <button class="btn btn-outline-success btn-with-icon btn-block">
-                                                        <i class="typcn typcn-edit"></i>
-                                                        Edit
-                                                    </button>
-                                                </a>
-                                            </div>
+                                        <th class="align-middle" scope="row">{{ $loop->iteration }}</th>
+                                        <td class="align-middle">{{ $client->name }}</td>
+                                        <td class="align-middle">{{ $client->email }}</td>
+                                        <td class="align-middle">{{ $client->phone }}</td>
+                                        <td class="align-middle text-center">{{ $client->bloodType->name }}</td>
+                                        <td class="align-middle">{{ $client->last_donation_date }}</td>
+                                        <td class="align-middle">{{ $client->d_o_b }}</td>
+                                        <td class="align-middle">{{ $client->city->name }}</td>
+                                        <td class="align-middle">
 
-                                        </td>
-                                        <td>
-
-                                            <form action="{{ route('category.destroy', $category->id) }}"
-                                                method="POST" id="deleteForm{{ $category->id }}">
+                                            <form action="{{ route('client.destroy', $client->id) }}" method="POST"
+                                                id="deleteForm{{ $client->id }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="col-sm-6 col-md-4 mg-t-10 mg-md-t-0 p-0">
                                                     <button type="button"
                                                         class="btn btn-outline-danger btn-with-icon btn-block"
-                                                        onclick="confirmDelete({{ $category->id }})">Delete</button>
+                                                        onclick="confirmDelete({{ $client->id }})">
+                                                        <i class="typcn typcn-trash m-0"></i>
+                                                    </button>
                                                 </div>
                                             </form>
 
                                             <script>
                                                 function confirmDelete(id) {
-                                                    if (confirm('Are you sure you want to delete this category?')) {
+                                                    if (confirm('Are you sure you want to delete this client?')) {
                                                         document.getElementById('deleteForm' + id).submit();
                                                     }
                                                 }
@@ -98,7 +90,7 @@
                             </tbody>
                         </table>
 
-                        {{$categories->links()}} {{-- اخلي الباجينيشن يكون بالبوتستراب App serveice provider بروح ل  --}}
+                        {{ $clients->links() }} {{-- اخلي الباجينيشن يكون بالبوتستراب App serveice provider بروح ل  --}}
                     </div><!-- bd -->
                 </div><!-- bd -->
             </div><!-- bd -->

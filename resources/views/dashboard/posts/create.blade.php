@@ -10,7 +10,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
             <div>
-                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Create Governorate</h2>
+                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Create Post</h2>
             </div>
         </div>
     </div>
@@ -18,9 +18,9 @@
 @endsection
 @section('content')
     <div class="my-5">
-        @include('dashboard.layouts.partials.error_validation')
-        <form method="POST" action="{{ route('governorate.store') }}" enctype="multipart/form-data">
-            @include('dashboard.governorates.form')
+        {{-- @include('dashboard.layouts.partials.error_validation') --}}
+        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
+            @include('dashboard.posts.form')
         </form>
     </div>
 @endsection
