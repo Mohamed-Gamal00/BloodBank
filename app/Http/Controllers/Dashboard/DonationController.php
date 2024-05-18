@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\BloodType;
 use App\Models\City;
-use App\Models\Client;
+use App\Models\DonationRequest;
 use Illuminate\Http\Request;
+use Redirect;
 
-class ClientController extends Controller
+class DonationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,23 +17,25 @@ class ClientController extends Controller
     public function index()
     {
         $request = request();
-        $query = Client::query(); // return query builder of this model
+        $query = DonationRequest::query();
         if ($request->query('query')) {
-            $query->where('name', 'LIKE', "%{$request->query('query')}%")
-                ->orWhere('phone', 'LIKE', "%{$request->query('query')}%")
-                ->orWhere('email', 'LIKE', "%{$request->query('query')}%");
+            $query->where('patient_name', 'LIKE', "%{$request->query('query')}%")
+                ->orWhere('patient_phone', 'LIKE', "%{$request->query('query')}%")
+                ->orWhere('hospital_name', 'LIKE', "%{$request->query('query')}%");
         }
+
         if ($request->query('city')) {
             $query->where('city_id', $request->query('city'));
         }
+
         if ($request->query('bloodType')) {
-            $query->where('blood_type_id',$request->query('bloodType'));
+            $query->where('blood_type_id', $request->query('bloodType'));
         }
 
+        $donations = $query->paginate(10);
         $cities = City::all();
         $bloodTypes = BloodType::all();
-        $clients = $query->paginate(10);
-        return view('dashboard.clients.index', compact('clients', 'cities', 'bloodTypes'));
+        return view('dashboard.donations.index', compact('donations', 'cities', 'bloodTypes'));
     }
 
     /**
@@ -80,6 +83,8 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $donation = DonationRequest::findOrFail($id);
+        $donation->delete();
+        return Redirect::route('donation.index')->with('success', 'Donation Deleted success');
     }
 }

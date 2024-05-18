@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Client;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use Redirect;
 
-class ClintController extends Controller
+class SettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clients = Client::paginate(10);
-        return view('dashboard.categories.index', compact('clients'));
+        $settings = Setting::first();
+        return view('dashboard.settings.index', compact('settings'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -53,7 +55,10 @@ class ClintController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $settings = Setting::findOrFail($id);
+
+        $settings->update($request->all());
+        return Redirect::route('setting.index')->with('success', 'Setting Updated success');
     }
 
     /**

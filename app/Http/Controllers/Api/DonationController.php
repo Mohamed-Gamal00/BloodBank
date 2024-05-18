@@ -47,7 +47,6 @@ class DonationController extends Controller
                 'details' => 'required',
                 'latitude' => 'required',
                 'longitude' => 'required',
-                'client_id' => 'required|exists:clients,id',
             ],
         );
         if ($validator->fails()) {
@@ -58,17 +57,19 @@ class DonationController extends Controller
         // return $donation_request;
         $donation_request = $request->user()->requests()->create($request->all());
 
-        
+
 
         $clientsId = $donation_request->city->governorate->clients() // كل العملا اللي هيوصلهم الاشعار
+
         // بختار الناس اللي مختارين الفاصئل اللي منها الفصيلة اللي هبعتلها الاشعار
         //  دي الفاصئل اللي الكلاينت ده مختار يجيله فيها اشعارات blood_types
-        ->whereHas('blood_types',function($q)use($donation_request) {
+        ->whereHas('blood_types',function($q) use ($donation_request) {
             $q->where('blood_types.id', $donation_request->blood_type_id); //بحدد الفصيلة
         })->pluck('clients.id')->toArray();
         // dd($clientsId);
         // return $clientsId;
-
+        //dd($clientsId);
+        $send = null;
         if(count($clientsId)){
             $bloodTypeName = BloodType::find($donation_request->blood_type_id)->name;
 

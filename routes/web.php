@@ -4,8 +4,11 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DonationController;
 use App\Http\Controllers\Dashboard\GovernorateController;
 use App\Http\Controllers\Dashboard\PostCntroller;
+use App\Http\Controllers\Dashboard\ResetPasswordController;
+use App\Http\Controllers\Dashboard\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,5 +38,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('category', CategoryController::class );
     Route::resource('post', PostCntroller::class );
     Route::resource('client', ClientController::class );
+    Route::resource('donation', DonationController::class );
+    Route::resource('setting', SettingController::class );
 
+    Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('reset_password.index');
+    Route::put('/reset-password', [ResetPasswordController::class, 'update'])->name('reset_password.update');
 });

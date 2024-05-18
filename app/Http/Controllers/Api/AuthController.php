@@ -106,7 +106,9 @@ class AuthController extends Controller
     public function settings()
     {
         $settings = Setting::first();
-        return responseJson(1, 'success', $settings);
+        if ($settings) {
+        }
+        return responseJson(0, 'not found', $settings);
     }
 
     public function profile(Request $request)
