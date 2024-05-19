@@ -90,6 +90,9 @@ class DonationController extends Controller
                 $send = notifyByFirebase($title,$body,$tokens,$data);
             }
         }
+        // else{
+        //     return responseJson(1,'لا يوجد مستخدم');
+        // }
         return responseJson(1,'تم الاضافة بنجاح',$send);
     }
 }

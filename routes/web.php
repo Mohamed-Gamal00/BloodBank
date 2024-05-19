@@ -44,3 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('reset_password.index');
     Route::put('/reset-password', [ResetPasswordController::class, 'update'])->name('reset_password.update');
 });
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('roles', 'RoleController');
+    Route::resource('users', 'UserController');
+});
