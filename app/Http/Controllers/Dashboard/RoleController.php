@@ -14,22 +14,24 @@ class RoleController extends Controller
 
     function __construct()
     {
-        $this->middleware(['permission:role-list|role-create|role-edit|role-delete'], ['only' => ['index', 'store']]);
-        $this->middleware(['permission:role-create'], ['only' => ['create', 'store']]);
-        $this->middleware(['permission:role-edit'], ['only' => ['edit', 'update']]);
-        $this->middleware(['permission:role-delete'], ['only' => ['destroy']]);
+        $this->middleware(['permission:roles'], ['only' => ['index','show']]);
+        $this->middleware(['permission:create-role'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:edit-role'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:delete-role'], ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
         $roles = Role::orderBy('id', 'DESC')->paginate(5);
-        return view('roles.index', compact('roles'));
+        return view('dashboard.roles.index', compact('roles'));
     }
 
     public function create()
     {
-        $permission = Permission::get();
-        return view('roles.create', compact('permission'));
+        $permissions = Permission::get();
+        if ($permissions) {
+            return view('dashboard.roles.create', compact('permissions'));
+        }
     }
 
     public function store(Request $request)
@@ -53,18 +55,18 @@ class RoleController extends Controller
             ->where("role_has_permissions.role_id", $id)
             ->get();
 
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return view('dashboard.roles.show', compact('role', 'rolePermissions'));
     }
 
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permissions = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
 
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        return view('dashboard.roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, $id)
