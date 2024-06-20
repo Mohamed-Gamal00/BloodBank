@@ -1,4 +1,7 @@
 <?php
+
+use App\Http\Controllers\Website\Auth\ClientLoginController;
+use App\Http\Controllers\Website\Auth\ClientRegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +21,13 @@ Route::get('/', function () {
 
 
 
+
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth:'])->group(function () {
+Route::get('/client-login', [ClientLoginController::class, 'index'])->name('client-login');
+Route::get('/client-register', [ClientRegisterController::class, 'index'])->name('client-register');
 
+Route::middleware(['auth:clients'])->group(function () {
 });
 
 

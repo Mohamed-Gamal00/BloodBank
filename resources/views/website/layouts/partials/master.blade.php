@@ -5,7 +5,7 @@
     @include('website.layouts.partials.head')
 </head>
 
-<body>
+<body class="@yield('body-class', 'default-class')">
     <div>
         @include('website.layouts.partials.main-header')
         <!-- container -->
