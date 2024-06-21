@@ -18,16 +18,18 @@
                 </nav>
             </div>
             <div class="signin-form">
-                <form>
+                <form action="{{ route('check-client') }}" method="POST">
+                    @csrf
                     <div class="logo">
-                        <img src="{{asset('website/imgs/logo.png')}}">
+                        <img src="{{ asset('website/imgs/logo.png') }}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="الجوال">
+                        <input type="text" name="phone" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="الجوال">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="كلمة المرور">
+                        <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="كلمة المرور">
                     </div>
                     <div class="row options">
                         <div class="col-md-6 remember">
@@ -37,13 +39,17 @@
                             </div>
                         </div>
                         <div class="col-md-6 forgot">
-                            <img src="{{asset('website/imgs/complain.png')}}">
+                            <img src="{{ asset('website/imgs/complain.png') }}">
                             <a href="#">هل نسيت كلمة المرور</a>
                         </div>
                     </div>
                     <div class="row buttons">
                         <div class="col-md-6 right">
-                            <a href="#">دخول</a>
+                            <a href="">
+                                <button class="btn btn-group-sm w-100">
+                                    دخول
+                                </button>
+                            </a>
                         </div>
                         <div class="col-md-6 left">
                             <a href="create-account.html">انشاء حساب جديد</a>

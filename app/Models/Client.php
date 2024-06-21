@@ -5,10 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 class Client extends Authenticatable
 {
 
+    use HasApiTokens, HasFactory, Notifiable;
+
     protected $table = 'clients';
+    protected $guard = 'clients';
     public $timestamps = true;
     protected $fillable = array('name', 'email', 'password', 'phone','d_o_b', 'city_id', 'last_donation_date', 'blood_type_id','pin_code');
     // protected $fillable = array('name', 'email', 'password', 'phone', 'last_donation_date', 'd_o_b', 'blood_type_id', 'city_id', 'pin_code');

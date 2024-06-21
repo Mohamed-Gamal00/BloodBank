@@ -26,10 +26,12 @@
                                 <i class="fas fa-phone-alt"></i>
                                 <p>+966506954964</p>
                             </div>
-                            <div class="e-mail">
-                                <i class="far fa-envelope"></i>
-                                <p>name@name.com</p>
-                            </div>
+                            @if (Auth::guard('client')->user())
+                                <div class="e-mail">
+                                    <i class="far fa-envelope"></i>
+                                    <p>{{ Auth::guard('client')->user()->email }}</p>
+                                </div>
+                            @endif
                         </div>
 
                         <!--I'm a member
@@ -89,13 +91,15 @@
                     <a class="navbar-brand" href="#">
                         <img src="imgs/logo.png" class="d-inline-block align-top" alt="">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.html">الرئيسية <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{{ route('home') }}">الرئيسية <span
+                                        class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">عن بنك الدم</a>
@@ -115,11 +119,14 @@
                         </ul>
 
                         <!--not a member-->
-                        <div class="accounts">
-                            <a href="{{route('client-register')}}" class="create">إنشاء حساب جديد</a>
-                            <a href="{{route('client-login')}}" class="signin">الدخول</a>
-                        </div>
-
+                        @if (auth()->guard('client')->guest())
+                            <div class="accounts">
+                                <a href="{{ route('client-register') }}" class="create">إنشاء حساب جديد</a>
+                                <a href="{{ route('client-login') }}" class="signin">الدخول</a>
+                            </div>
+                        @else
+                            <a href="{{route('client-logout')}}" class="text-danger" class="logout">تسجيل الخروج</a>
+                        @endif
                         <!--I'm a member
 
                         <a href="#" class="donate">
